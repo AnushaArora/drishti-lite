@@ -56,6 +56,9 @@ The output can also be read aloud in the selected Indian regional language to im
 4. The AI analyzes intent and returns a structured response.
 5. The frontend displays the result and optionally reads it aloud.
 
+
+<img width="800" height="500" alt="Screenshot 2026-01-16 225051" src="https://github.com/user-attachments/assets/932c6e4f-0de5-425c-9706-02e6bf048909" />
+
 ---
 
 ## Key Features
