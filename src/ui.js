@@ -1,15 +1,14 @@
 /**
- * UI MODULE - CYBER TERMINAL EDITION
- * Features: Live System Logs, Neon Visuals, Multi-Language Support
+ * UI MODULE - FINAL STABLE EDITION
+ * Features: Cyber Terminal + Manual Audio Override + Robust Voice Loading
  */
 
-// Native Translations for the Interface
 const UI_TEXT = {
-  'english': { title: "Drishti AI", status: "SYSTEM READY", btn: "INITIATE SCAN", input: "Enter intercepted message..." },
-  'hindi': { title: "दृष्टि AI", status: "सिस्टम तैयार", btn: "स्कैन शुरू करें", input: "संदेहास्पद संदेश दर्ज करें..." },
-  'tamil': { title: "த்ரிஷ்டி AI", status: "சிஸ்டம் தயார்", btn: "ஸ்கேன் செய்", input: "சந்தேகம் உள்ள செய்தியை இடுங்கள்..." },
-  'telugu': { title: "దృష్టి AI", status: "సిస్టమ్ రెడీ", btn: "స్కాన్ ప్రారంభించు", input: "సందేశాన్ని ఇక్కడ నమోదు చేయండి..." },
-  'kannada': { title: "ದೃಷ್ಟಿ AI", status: "ಸಿಸ್ಟಮ್ ಸಿದ್ಧ", btn: "ಸ್ಕ್ಯಾನ್ ಮಾಡಿ", input: "ಸಂದೇಶವನ್ನು ಇಲ್ಲಿ ನಮೂದಿಸಿ..." }
+  'english': { title: "Drishti AI", btn: "INITIATE SCAN", input: "Enter intercepted message...", audio: "PLAY AUDIO" },
+  'hindi': { title: "दृष्टि AI", btn: "स्कैन शुरू करें", input: "संदेहास्पद संदेश दर्ज करें...", audio: "आवाज़ सुनें" },
+  'tamil': { title: "த்ரிஷ்டி AI", btn: "ஸ்கேன் செய்", input: "சந்தேகம் உள்ள செய்தியை இடுங்கள்...", audio: "ஒலி வடிவம்" },
+  'telugu': { title: "దృష్టి AI", btn: "స్కాన్ ప్రారంభించు", input: "సందేశాన్ని ఇక్కడ నమోదు చేయండి...", audio: "ఆడియో ప్లే" },
+  'kannada': { title: "ದೃಷ್ಟಿ AI", btn: "ಸ್ಕ್ಯಾನ್ ಮಾಡಿ", input: "ಸಂದೇಶವನ್ನು ಇಲ್ಲಿ ನಮೂದಿಸಿ...", audio: "ಆಡಿಯೋ ಪ್ಲೇ" }
 };
 
 export function getHtml() {
@@ -19,142 +18,96 @@ export function getHtml() {
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drishti AI | Cyber Shield</title>
+    <title>Drishti AI | Audio Active</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-      :root { --neon: #00f3ff; --danger: #ff003c; --safe: #00ff41; --bg: #0a0a0a; --panel: rgba(20,20,20,0.9); }
-      body {
-        font-family: 'Courier New', monospace;
-        background: var(--bg);
-        color: var(--neon);
-        height: 100vh;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-      }
-      /* Animated Background Grid */
-      .grid { position: absolute; width: 200%; height: 200%; background-image: linear-gradient(var(--panel) 1px, transparent 1px), linear-gradient(90deg, var(--panel) 1px, transparent 1px); background-size: 40px 40px; transform: perspective(500px) rotateX(60deg); opacity: 0.3; z-index: -1; animation: gridMove 20s linear infinite; }
-      @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(40px); } }
-
-      .interface {
-        width: 100%; max-width: 450px;
-        background: var(--panel);
-        border: 1px solid var(--neon);
-        box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-        border-radius: 8px;
-        padding: 20px;
-        position: relative;
-      }
-      .interface::before { content: "CLASSIFIED // AI4BHARAT PROTOCOL"; position: absolute; top: -12px; left: 20px; background: var(--bg); padding: 0 10px; font-size: 0.7rem; color: var(--neon); letter-spacing: 2px; }
-
-      /* Controls */
-      .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
-      h1 { margin: 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; }
+      body { background: #000; color: #00f3ff; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+      .interface { width: 100%; max-width: 420px; padding: 25px; border: 1px solid #00f3ff; box-shadow: 0 0 30px rgba(0,243,255,0.15); border-radius: 12px; background: rgba(10,10,10,0.95); position: relative; }
       
-      select, textarea, button {
-        width: 100%;
-        background: rgba(0,0,0,0.5);
-        color: white;
-        border: 1px solid #333;
-        padding: 12px;
-        margin-bottom: 15px;
-        font-family: inherit;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-      select:focus, textarea:focus { outline: none; border-color: var(--neon); box-shadow: 0 0 10px rgba(0, 243, 255, 0.2); }
-      textarea { height: 100px; resize: none; color: #ddd; }
-
-      /* The Cyber Button */
-      button {
-        background: var(--neon);
-        color: black;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        cursor: pointer;
-        transition: all 0.2s;
-        border: none;
-        padding: 15px;
-      }
-      button:hover { background: white; box-shadow: 0 0 15px var(--neon); }
-      button:disabled { background: #333; color: #666; cursor: not-allowed; box-shadow: none; }
-
-      /* The Live Terminal */
-      .terminal {
-        background: #000;
-        border: 1px solid #333;
-        padding: 10px;
-        font-size: 0.8rem;
-        height: 100px;
-        overflow-y: auto;
-        margin-bottom: 15px;
-        display: none;
-        color: #0f0;
-        font-family: 'Consolas', monospace;
-      }
-      .log-line { margin: 2px 0; opacity: 0; animation: fadeIn 0.2s forwards; }
-      @keyframes fadeIn { to { opacity: 1; } }
-
-      /* Results */
-      #result { display: none; border: 1px solid #333; padding: 15px; text-align: center; }
-      .badge { display: inline-block; padding: 5px 15px; font-size: 1.2rem; font-weight: bold; border: 2px solid; text-transform: uppercase; margin-bottom: 10px; }
-      .safe { color: var(--safe); border-color: var(--safe); box-shadow: 0 0 10px var(--safe); }
-      .danger { color: var(--danger); border-color: var(--danger); box-shadow: 0 0 10px var(--danger); }
+      h1 { margin: 0 0 20px 0; font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #333; padding-bottom: 10px; }
       
-      .native-text { font-size: 1.1rem; margin-top: 10px; line-height: 1.5; color: white; }
+      select, textarea, button { width: 100%; background: #0a0a0a; color: #eee; border: 1px solid #333; padding: 12px; margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 1rem; border-radius: 6px; }
+      select:focus, textarea:focus { outline: none; border-color: #00f3ff; }
+      textarea { height: 100px; resize: none; }
+      
+      /* Main Scan Button */
+      .scan-btn { background: #00f3ff; color: #000; font-weight: 800; border: none; cursor: pointer; transition: all 0.2s; }
+      .scan-btn:hover { background: #fff; box-shadow: 0 0 15px #00f3ff; }
+      .scan-btn:disabled { background: #333; color: #666; cursor: wait; box-shadow: none; }
+
+      /* Audio Button */
+      .audio-btn { background: transparent; border: 1px solid #00f3ff; color: #00f3ff; display: none; margin-top: 15px; cursor: pointer; font-weight: bold; }
+      .audio-btn:hover { background: rgba(0, 243, 255, 0.1); }
+
+      /* Terminal & Results */
+      .terminal { height: 120px; overflow-y: auto; font-size: 0.85rem; color: #0f0; margin-bottom: 15px; border: 1px dashed #333; padding: 10px; display:none; background: #000; }
+      .badge { padding: 12px; text-align: center; font-weight: bold; margin-bottom: 15px; font-size: 1.2rem; display:none; border-radius: 4px; }
+      .safe { background: rgba(0, 255, 65, 0.2); color: #00ff41; border: 1px solid #00ff41; }
+      .danger { background: rgba(255, 0, 60, 0.2); color: #ff003c; border: 1px solid #ff003c; }
+      
+      .native-response { font-size: 1.1rem; color: #fff; line-height: 1.6; border-left: 3px solid #00f3ff; padding-left: 15px; white-space: pre-wrap; }
     </style>
   </head>
   <body>
-    <div class="grid"></div>
     <div class="interface">
-      <div class="header">
-        <h1 id="uiTitle">Drishti AI</h1>
-        <i class="fa-solid fa-satellite-dish" style="color:var(--neon)"></i>
-      </div>
-
+      <h1 id="uiTitle">Drishti AI</h1>
+      
       <select id="langSelect" onchange="updateUI()">
-        <option value="english">English (Default)</option>
+        <option value="english">English</option>
         <option value="hindi">Hindi (हिंदी)</option>
         <option value="tamil">Tamil (தமிழ்)</option>
         <option value="telugu">Telugu (తెలుగు)</option>
         <option value="kannada">Kannada (ಕನ್ನಡ)</option>
-        <option value="bengali">Bengali (বাংলা)</option>
-        <option value="marathi">Marathi (मराठी)</option>
       </select>
 
-      <textarea id="input" placeholder="Enter intercepted message..."></textarea>
-
+      <textarea id="input" placeholder="Enter message..."></textarea>
+      
       <div id="terminal" class="terminal"></div>
+      
+      <button id="btn" class="scan-btn" onclick="analyze()">INITIATE SCAN</button>
 
-      <button id="btn" onclick="analyze()">INITIATE SCAN</button>
-
-      <div id="result">
+      <div id="result" style="display:none;">
         <div id="badge" class="badge"></div>
-        <div id="nativeResponse" class="native-text"></div>
+        <div id="nativeResponse" class="native-response"></div>
+        
+        <button id="audioBtn" class="audio-btn" onclick="manualSpeak()">
+          <i class="fa-solid fa-volume-high"></i> <span id="btnAudioText">PLAY AUDIO</span>
+        </button>
       </div>
     </div>
 
     <script>
       const UI = ${JSON.stringify(UI_TEXT)};
+      let lastText = "";
+      let lastLang = "english";
+      let availableVoices = [];
+
+      // --- VOICE LOADER FIX ---
+      // Ensures voices are actually loaded before we try to use them
+      function loadVoices() {
+        availableVoices = window.speechSynthesis.getVoices();
+        console.log("Voices loaded:", availableVoices.length);
+      }
       
+      // Chrome loads voices asynchronously
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+      
+      // Trigger load immediately just in case
+      loadVoices();
+
       function updateUI() {
         const lang = document.getElementById('langSelect').value;
         const t = UI[lang] || UI['english'];
         document.getElementById('uiTitle').innerText = t.title;
         document.getElementById('btn').innerText = t.btn;
         document.getElementById('input').placeholder = t.input;
+        document.getElementById('btnAudioText').innerText = t.audio;
       }
 
       function log(msg) {
         const term = document.getElementById('terminal');
         term.style.display = 'block';
-        const line = document.createElement('div');
-        line.className = 'log-line';
-        line.innerText = "> " + msg;
-        term.appendChild(line);
+        term.innerHTML += "> " + msg + "<br>";
         term.scrollTop = term.scrollHeight;
       }
 
@@ -163,55 +116,49 @@ export function getHtml() {
         const lang = document.getElementById('langSelect').value;
         if(!text) return;
 
-        const btn = document.getElementById('btn');
-        const res = document.getElementById('result');
-        const term = document.getElementById('terminal');
-
-        // Reset
-        res.style.display = 'none';
-        term.innerHTML = ''; 
-        btn.disabled = true;
+        // UI Reset
+        document.getElementById('btn').disabled = true;
+        document.getElementById('result').style.display = 'none';
+        document.getElementById('terminal').innerHTML = '';
+        document.getElementById('audioBtn').style.display = 'none';
 
         try {
-          // Fake logs for visual effect (Judge: "Wow")
-          log("Initializing AI4Bharat Bridge...");
-          await new Promise(r => setTimeout(r, 400));
-          log("Detecting Language: " + lang.toUpperCase());
-          
-          log("Uploading to Cloudflare Workers...");
+          log("System Initialized...");
+          log("Language Detected: " + lang.toUpperCase());
+          log("Processing via Cloudflare Workers AI...");
           
           const req = await fetch('/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ text, source_lang: lang })
           });
-
-          log("Llama-3 Neural Core: Analyzing Intent...");
           
+          log("Analysis Complete.");
+          log("Generating Audio Response...");
+
           const data = await req.json();
-          
           if(data.error) throw new Error(data.error);
-
-          log("Generating Native Response...");
-          await new Promise(r => setTimeout(r, 500)); // Suspense
 
           render(data, lang);
 
         } catch(e) {
           log("ERROR: " + e.message);
         } finally {
-          btn.disabled = false;
+          document.getElementById('btn').disabled = false;
         }
       }
 
       function render(data, lang) {
+        document.getElementById('terminal').style.display = 'none';
         const res = document.getElementById('result');
         const badge = document.getElementById('badge');
+        const audioBtn = document.getElementById('audioBtn');
         
         res.style.display = 'block';
-        document.getElementById('terminal').style.display = 'none'; // Hide terminal to show result clean
+        badge.style.display = 'block';
+        audioBtn.style.display = 'block'; 
 
-        // Badge Logic
+        // 1. Badge Logic
         if(data.risk_level === 'High') {
           badge.className = 'badge danger';
           badge.innerText = "THREAT DETECTED";
@@ -220,20 +167,75 @@ export function getHtml() {
           badge.innerText = "SAFE MESSAGE";
         }
 
-        // Native Text
-        const finalMsg = data.action_translated || data.action;
-        document.getElementById('nativeResponse').innerText = finalMsg;
+        // 2. Text Logic
+        const finalText = data.action_translated;
+        document.getElementById('nativeResponse').innerText = finalText;
 
-        // Speak
-        speak(finalMsg, lang);
+        // 3. Audio Logic
+        lastText = finalText;
+        lastLang = lang;
+
+        // Small delay to ensure UI renders before audio starts
+        setTimeout(() => speak(finalText, lang), 500);
+      }
+
+      function manualSpeak() {
+        speak(lastText, lastLang);
       }
 
       function speak(text, lang) {
+        // Cancel previous speech to prevent overlap/errors
         window.speechSynthesis.cancel();
+        
         const u = new SpeechSynthesisUtterance(text);
-        const map = { 'hindi': 'hi-IN', 'tamil': 'ta-IN', 'telugu': 'te-IN', 'kannada': 'kn-IN', 'bengali': 'bn-IN', 'marathi': 'mr-IN' };
-        u.lang = map[lang] || 'en-US';
-        u.rate = 0.9;
+        
+        // Map UI selection to BCP-47 codes
+        const langMap = { 
+          'hindi': 'hi-IN', 
+          'tamil': 'ta-IN', 
+          'telugu': 'te-IN', 
+          'kannada': 'kn-IN', 
+          'english': 'en-US' 
+        };
+        const targetLang = langMap[lang] || 'en-US';
+
+        // --- SMART VOICE SELECTION ---
+        // 1. Try to find an exact match (e.g., 'ta-IN')
+        let voice = availableVoices.find(v => v.lang === targetLang);
+        
+        // 2. If not found, try finding ANY voice for that language (e.g., 'ta')
+        if (!voice) {
+             const shortCode = targetLang.split('-')[0]; // 'ta', 'hi'
+             voice = availableVoices.find(v => v.lang.startsWith(shortCode));
+        }
+
+        // 3. Fallback Logic to prevent 'SpeechSynthesisErrorEvent'
+        if (voice) {
+            u.voice = voice;
+            u.lang = targetLang;
+        } else {
+            // Only warn, don't crash. Fallback to English/Default if native voice is missing.
+            console.warn("Native voice not found for " + lang + ". Using system default.");
+            // We intentionally do NOT set u.lang if we can't find it, 
+            // letting the browser pick its best default rather than failing.
+        }
+
+        u.rate = 0.9; // Slightly slower for clarity
+        u.volume = 1.0;
+        
+        u.onend = function() { console.log("Audio finished"); };
+        
+        u.onerror = function(e) { 
+            console.error("Audio Error:", e);
+            // Final safety net: If it fails, try speaking in English (or default)
+            if (u.lang !== 'en-US') {
+                console.log("Retrying with default voice...");
+                const fallback = new SpeechSynthesisUtterance(text);
+                fallback.lang = 'en-US'; 
+                window.speechSynthesis.speak(fallback);
+            }
+        };
+
         window.speechSynthesis.speak(u);
       }
     </script>
